@@ -21,8 +21,29 @@ serve(async (req) => {
       body: JSON.stringify({
         model: 'google/gemini-2.5-flash',
         messages: [{
+          role: 'system',
+          content: `You are a Fake News Classification System. Your job is to analyze text and determine whether it is likely fake or authentic.
+
+Follow these rules:
+1. Do NOT treat future dates as indicators of fake news. Future dates in news articles are normal for announcements, scheduled launches, or upcoming events.
+2. Focus only on evidence-based signals:
+   - Source credibility
+   - Presence or absence of verifiable details
+   - Unsupported scientific or political claims
+   - Sensational or conspiracy-based wording
+   - Anonymous or unverifiable experts
+   - Logical consistency
+3. A news article is NOT fake simply because:
+   - The event date is in the future
+   - It hasn't happened yet
+   - It reports on announcements or scheduled events
+
+Your output must classify the text as "fake" or "authentic".
+Respond with JSON only: {"prediction": "fake"|"authentic", "confidence": 0.0-1.0, "explanation": "brief factual explanation based on linguistic/content cues only"}`
+        },
+        {
           role: 'user',
-          content: `Analyze if this text is fake news or authentic. Respond with JSON: {"prediction": "fake"|"authentic"|"uncertain", "confidence": 0.0-1.0, "explanation": "brief reason"}. Text: ${text.substring(0, 2000)}`
+          content: `Analyze this text:\n\n${text.substring(0, 2000)}`
         }],
       }),
     });
