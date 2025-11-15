@@ -34,7 +34,10 @@ serve(async (req) => {
       text
     }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
   } catch (error) {
-    return new Response(JSON.stringify({ error: error.message }), {
+    console.error('Crawl error:', error);
+    return new Response(JSON.stringify({ 
+      error: error instanceof Error ? error.message : 'An unknown error occurred' 
+    }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' }
     });
