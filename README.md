@@ -1,73 +1,140 @@
-# Welcome to your Lovable project
+# Fake News Detection System
 
-## Project info
+## Overview
 
-**URL**: https://lovable.dev/projects/67300147-b556-46dc-a3dc-7a240c867c81
+This project is a **Fake News Detection System** built as part of a college engineering assignment. The application allows users to analyze text or URLs to identify whether the provided information is likely to be fake or real. It also supports batch processing, maintains user history, and provides an admin dashboard for managing analysis data.
 
-## How can I edit this code?
+---
 
-There are several ways of editing your application.
+## Features
 
-**Use Lovable**
+### 🔍 Fake News Analysis
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/67300147-b556-46dc-a3dc-7a240c867c81) and start prompting.
+* Analyze **text** input.
+* Analyze **news article URLs**.
+* Uses an AI-driven detection pipeline.
 
-Changes made via Lovable will be committed automatically to this repo.
+### 📦 Batch Processing
 
-**Use your preferred IDE**
+* Upload multiple pieces of content for bulk analysis.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### 📊 Admin Dashboard
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+* Manage all user submissions.
+* View analytics and performance metrics.
 
-Follow these steps:
+### 📁 User History
+
+* Users can view their previous analysis results.
+
+### 📤 Social Sharing
+
+* Share verified results on social platforms.
+
+### 🎨 Modern UI
+
+* Built with clean, responsive, production-quality design.
+
+---
+
+## Tech Stack
+
+* **React** (TypeScript)
+* **Vite**
+* **Tailwind CSS**
+* **shadcn-ui**
+* **Supabase** (for authentication & database)
+
+---
+
+## Project Setup
+
+### 1. Clone the Repository
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
 git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
 cd <YOUR_PROJECT_NAME>
+```
 
-# Step 3: Install the necessary dependencies.
-npm i
+### 2. Install Dependencies
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```sh
+npm install
+```
+
+### 3. Start Development Server
+
+```sh
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+The development server will start with auto‑reload.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+---
 
-**Use GitHub Codespaces**
+## Deployment
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+This project can be deployed to any static hosting provider such as **Vercel**, **Netlify**, or **Cloudflare Pages**.
 
-## What technologies are used for this project?
+1. Build the project:
 
-This project is built with:
+```sh
+npm run build
+```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+2. Deploy the contents of the `dist/` folder to your hosting platform.
 
-## How can I deploy this project?
+---
 
-Simply open [Lovable](https://lovable.dev/projects/67300147-b556-46dc-a3dc-7a240c867c81) and click on Share -> Publish.
+## Folder Structure
 
-## Can I connect a custom domain to my Lovable project?
+```
+project-root/
+├── src/
+│   ├── components/
+│   ├── pages/
+│   ├── hooks/
+│   ├── lib/
+│   ├── styles/
+│   └── main.tsx
+├── public/
+├── package.json
+├── tsconfig.json
+└── vite.config.ts
+```
 
-Yes, you can!
+---
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## Environment Variables
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Create a `.env` file with the required keys:
+
+```
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
+
+Add additional API keys depending on your fake‑news detection logic.
+
+---
+
+## How It Works
+
+1. User inputs text or URL.
+2. Backend/AI model processes the data.
+3. System returns a probability‑based authenticity score.
+4. Result is stored in Supabase for history & admin review.
+
+---
+
+## Future Enhancements
+
+* Improve accuracy with advanced NLP models.
+* Add browser extension for real‑time news validation.
+* Enable user‑generated reporting.
+
+---
+
+## License
+
+This project is created solely for **academic purposes**.
