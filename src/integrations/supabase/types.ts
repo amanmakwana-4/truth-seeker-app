@@ -56,6 +56,117 @@ export type Database = {
         }
         Relationships: []
       }
+      batch_items: {
+        Row: {
+          analysis_id: string | null
+          batch_job_id: string | null
+          created_at: string | null
+          error_message: string | null
+          id: string
+          input_text: string | null
+          input_url: string | null
+          status: string
+          updated_at: string | null
+        }
+        Insert: {
+          analysis_id?: string | null
+          batch_job_id?: string | null
+          created_at?: string | null
+          error_message?: string | null
+          id?: string
+          input_text?: string | null
+          input_url?: string | null
+          status?: string
+          updated_at?: string | null
+        }
+        Update: {
+          analysis_id?: string | null
+          batch_job_id?: string | null
+          created_at?: string | null
+          error_message?: string | null
+          id?: string
+          input_text?: string | null
+          input_url?: string | null
+          status?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "batch_items_analysis_id_fkey"
+            columns: ["analysis_id"]
+            isOneToOne: false
+            referencedRelation: "analyses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "batch_items_batch_job_id_fkey"
+            columns: ["batch_job_id"]
+            isOneToOne: false
+            referencedRelation: "batch_jobs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      batch_jobs: {
+        Row: {
+          completed_items: number
+          created_at: string | null
+          failed_items: number
+          id: string
+          status: string
+          total_items: number
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          completed_items?: number
+          created_at?: string | null
+          failed_items?: number
+          id?: string
+          status?: string
+          total_items?: number
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          completed_items?: number
+          created_at?: string | null
+          failed_items?: number
+          id?: string
+          status?: string
+          total_items?: number
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      contact_submissions: {
+        Row: {
+          created_at: string | null
+          email: string
+          id: string
+          message: string
+          name: string
+          subject: string
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          id?: string
+          message: string
+          name: string
+          subject: string
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+          subject?: string
+        }
+        Relationships: []
+      }
       models: {
         Row: {
           accuracy: number | null
@@ -92,6 +203,36 @@ export type Database = {
           provider?: string
           updated_at?: string | null
           version?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string | null
+          display_name: string | null
+          email: string | null
+          id: string
+          save_history: boolean | null
+          updated_at: string | null
+          username: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          display_name?: string | null
+          email?: string | null
+          id: string
+          save_history?: boolean | null
+          updated_at?: string | null
+          username?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          display_name?: string | null
+          email?: string | null
+          id?: string
+          save_history?: boolean | null
+          updated_at?: string | null
+          username?: string | null
         }
         Relationships: []
       }

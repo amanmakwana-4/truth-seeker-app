@@ -6,6 +6,7 @@ import { Loader2, AlertCircle, CheckCircle2, AlertTriangle } from "lucide-react"
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import ConfidenceMeter from "./ConfidenceMeter";
+import { SocialShare } from "./SocialShare";
 
 const TextAnalysis = () => {
   const [text, setText] = useState("");

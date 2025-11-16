@@ -6,6 +6,7 @@ import { Loader2, ExternalLink, AlertCircle, CheckCircle2, AlertTriangle } from 
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import ConfidenceMeter from "./ConfidenceMeter";
+import { SocialShare } from "./SocialShare";
 
 const UrlCrawler = () => {
   const [url, setUrl] = useState("");
