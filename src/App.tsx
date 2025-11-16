@@ -6,6 +6,16 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
+import Admin from "./pages/Admin";
+import History from "./pages/History";
+import Batch from "./pages/Batch";
+import Profile from "./pages/Profile";
+import ChangePassword from "./pages/ChangePassword";
+import Settings from "./pages/Settings";
+import AboutUs from "./pages/AboutUs";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Terms from "./pages/Terms";
+import Contact from "./pages/Contact";
 
 const queryClient = new QueryClient();
 
@@ -18,6 +28,16 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/auth" element={<Auth />} />
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/history" element={<History />} />
+          <Route path="/batch" element={<Batch />} />
+          <Route path="/account/profile" element={<Profile />} />
+          <Route path="/account/change-password" element={<ChangePassword />} />
+          <Route path="/account/settings" element={<Settings />} />
+          <Route path="/about-us" element={<AboutUs />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/contact" element={<Contact />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -1,34 +1,31 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Shield, AlertTriangle, LogIn, User } from "lucide-react";
+import { Shield, AlertTriangle, LogIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
 import TextAnalysis from "@/components/TextAnalysis";
 import UrlCrawler from "@/components/UrlCrawler";
 import About from "@/components/About";
+import { UserDropdown } from "@/components/UserDropdown";
 
 const Index = () => {
-  const [user, setUser] = useState(supabase.auth.getUser());
+  const [user, setUser] = useState<any>(null);
   const navigate = useNavigate();
-  const { toast } = useToast();
 
-  const handleSignOut = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) {
-      toast({
-        title: "Error signing out",
-        description: error.message,
-        variant: "destructive",
-      });
-    } else {
-      toast({
-        title: "Signed out successfully",
-      });
-      navigate("/auth");
-    }
-  };
+  useEffect(() => {
+    // Check initial session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   return (
     <div className="min-h-screen bg-background">
@@ -47,13 +44,10 @@ const Index = () => {
           <div className="flex items-center gap-2">
             {user ? (
               <>
-                <Button variant="ghost" size="sm" onClick={() => navigate("/admin")}>
-                  <User className="w-4 h-4 mr-2" />
-                  Admin
+                <Button variant="ghost" size="sm" onClick={() => navigate("/batch")}>
+                  Batch Analysis
                 </Button>
-                <Button variant="outline" size="sm" onClick={handleSignOut}>
-                  Sign Out
-                </Button>
+                <UserDropdown />
               </>
             ) : (
               <Button onClick={() => navigate("/auth")} size="sm">
@@ -107,10 +101,30 @@ const Index = () => {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-border mt-16 py-8 bg-card">
-        <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
-          <p>© 2025 Fake News Detection System. Built with AI-powered technology.</p>
-          <p className="mt-2">Always verify information from multiple trusted sources.</p>
+      <footer className="border-t border-border bg-card mt-12">
+        <div className="container mx-auto px-4 py-6">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-sm text-muted-foreground">
+              © {new Date().getFullYear()} Fake News Detection System. All rights reserved.
+            </p>
+            <div className="flex flex-wrap gap-4 text-sm">
+              <Link to="/about-us" className="text-muted-foreground hover:text-primary transition-colors">
+                About Us
+              </Link>
+              <Link to="/privacy-policy" className="text-muted-foreground hover:text-primary transition-colors">
+                Privacy Policy
+              </Link>
+              <Link to="/terms" className="text-muted-foreground hover:text-primary transition-colors">
+                Terms & Conditions
+              </Link>
+              <Link to="/contact" className="text-muted-foreground hover:text-primary transition-colors">
+                Contact
+              </Link>
+            </div>
+          </div>
+          <p className="text-center mt-4 text-xs text-muted-foreground">
+            Always verify information from multiple sources before making decisions.
+          </p>
         </div>
       </footer>
     </div>
