@@ -82,6 +82,21 @@ const UrlCrawler = () => {
       if (error) throw error;
 
       setResult(data);
+
+      // Save to database
+      const { data: { user } } = await supabase.auth.getUser();
+      await supabase.from("analyses").insert({
+        input_text: article.text,
+        url: article.url,
+        article_title: article.title,
+        analysis_type: "url",
+        prediction: data.prediction,
+        confidence_score: data.confidenceScore,
+        model_version: data.modelVersion,
+        processing_time_ms: data.processingTime,
+        user_id: user?.id || null,
+      });
+
       toast({
         title: "Analysis complete",
         description: "The article has been analyzed successfully",
@@ -245,6 +260,12 @@ const UrlCrawler = () => {
                 <p className="text-sm text-muted-foreground">{result.explanation}</p>
               </div>
             )}
+
+            <SocialShare
+              prediction={result.prediction}
+              confidence={result.confidenceScore}
+              text={article.text}
+            />
           </CardContent>
         </Card>
       )}

@@ -44,6 +44,19 @@ const TextAnalysis = () => {
       if (error) throw error;
 
       setResult(data);
+
+      // Save to database
+      const { data: { user } } = await supabase.auth.getUser();
+      await supabase.from("analyses").insert({
+        input_text: text,
+        analysis_type: "text",
+        prediction: data.prediction,
+        confidence_score: data.confidenceScore,
+        model_version: data.modelVersion,
+        processing_time_ms: data.processingTime,
+        user_id: user?.id || null,
+      });
+
       toast({
         title: "Analysis complete",
         description: "Your text has been analyzed successfully",
@@ -167,6 +180,12 @@ const TextAnalysis = () => {
                 <p className="text-sm text-muted-foreground">{result.explanation}</p>
               </div>
             )}
+
+            <SocialShare
+              prediction={result.prediction}
+              confidence={result.confidenceScore}
+              text={text}
+            />
           </CardContent>
         </Card>
       )}
