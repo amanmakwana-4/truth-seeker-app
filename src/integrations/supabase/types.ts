@@ -271,7 +271,7 @@ export type Database = {
       }
     }
     Enums: {
-      analysis_type: "text" | "url"
+      analysis_type: "text" | "url" | "image"
       app_role: "admin" | "user"
       prediction_result: "fake" | "authentic" | "uncertain"
     }
@@ -401,7 +401,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      analysis_type: ["text", "url"],
+      analysis_type: ["text", "url", "image"],
       app_role: ["admin", "user"],
       prediction_result: ["fake", "authentic", "uncertain"],
     },
