@@ -30,6 +30,32 @@ const Batch = () => {
 
   useEffect(() => {
     checkAuth();
+
+    // Subscribe to realtime updates for batch jobs
+    const channel = supabase
+      .channel('batch-updates')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'batch_jobs'
+        },
+        (payload) => {
+          console.log('Batch job update:', payload);
+          if (payload.eventType === 'UPDATE' && payload.new.status === 'completed') {
+            toast({
+              title: "Batch Analysis Complete",
+              description: `Analysis finished: ${payload.new.completed_items} items processed`,
+            });
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, []);
 
   const checkAuth = async () => {
