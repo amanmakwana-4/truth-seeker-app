@@ -77,7 +77,7 @@ const ImageAnalysis = () => {
         
         await supabase.from('analyses').insert({
           input_text: 'Image Analysis',
-          analysis_type: 'url', // Using 'url' type temporarily until migration is approved
+          analysis_type: 'image',
           prediction: predictionMap[data.prediction] || 'uncertain',
           confidence_score: data.confidence / 100, // Convert to 0-1 scale
           model_version: '1.0',
