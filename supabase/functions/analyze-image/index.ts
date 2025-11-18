@@ -89,9 +89,10 @@ serve(async (req) => {
 
   } catch (error) {
     console.error('Error in analyze-image function:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Failed to analyze image';
     return new Response(
       JSON.stringify({ 
-        error: error.message || 'Failed to analyze image',
+        error: errorMessage,
         prediction: 'Error',
         confidence: 0,
         explanation: 'An error occurred during analysis'
