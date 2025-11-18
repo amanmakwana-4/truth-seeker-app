@@ -5,7 +5,7 @@ import { Upload, Image as ImageIcon } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import ConfidenceMeter from "./ConfidenceMeter";
-import SocialShare from "./SocialShare";
+import { SocialShare } from "./SocialShare";
 
 const ImageAnalysis = () => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
@@ -68,11 +68,18 @@ const ImageAnalysis = () => {
 
         // Save to database
         const { data: { user } } = await supabase.auth.getUser();
+        
+        // Map prediction to database enum
+        const predictionMap: { [key: string]: 'fake' | 'authentic' | 'uncertain' } = {
+          'Likely Fake News': 'fake',
+          'Likely Authentic': 'authentic'
+        };
+        
         await supabase.from('analyses').insert({
           input_text: 'Image Analysis',
-          analysis_type: 'image',
-          prediction: data.prediction,
-          confidence_score: data.confidence,
+          analysis_type: 'url', // Using 'url' type temporarily until migration is approved
+          prediction: predictionMap[data.prediction] || 'uncertain',
+          confidence_score: data.confidence / 100, // Convert to 0-1 scale
           model_version: '1.0',
           processing_time_ms: processingTime,
           user_id: user?.id || null
@@ -165,15 +172,19 @@ const ImageAnalysis = () => {
                 </div>
               </div>
               
-              <ConfidenceMeter confidence={result.confidence} />
+              <ConfidenceMeter 
+                score={result.confidence / 100} 
+                prediction={result.prediction === 'Likely Fake News' ? 'fake' : 'authentic'} 
+              />
               
               <div className="p-4 bg-muted/50 rounded-lg">
                 <p className="text-sm leading-relaxed">{result.explanation}</p>
               </div>
 
               <SocialShare
-                result={result.prediction}
-                confidence={result.confidence}
+                prediction={result.prediction === 'Likely Fake News' ? 'fake' : 'authentic'}
+                confidence={result.confidence / 100}
+                text="Image Analysis"
               />
             </div>
           )}
